@@ -44,6 +44,18 @@ app.post("/products", (req:Request, res:Response)=>{
 
 })
 
+app.patch("/product/:id", (req:Request, res:Response)=> {
+  const productId = req.params.id ?? "1"; 
+  const prodIndex = products.findIndex(prod => prod.id === parseInt(productId))
+  const newData = req.body;
+  const updatedObject = {...products[prodIndex], ...newData}
+  console.log(updatedObject)
+  products[prodIndex] = updatedObject
+
+  return res.status(201).json({message: "update successful", products})
+
+})
+
 app.listen(PORT, ()=> {
   console.log(`Server is running on http://localhost:${PORT}`);
 })
